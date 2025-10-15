@@ -1,9 +1,11 @@
 import app from "./src/app.js";
 import connectDb from "./src/db/db.js";
 import { router} from "./src/routes/auth.route.js"
+import dotenv from "dotenv";
 
 
 
+dotenv.config();
 
 connectDb(); // connecting mongodb
 
