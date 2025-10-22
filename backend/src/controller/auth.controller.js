@@ -79,7 +79,7 @@ const registerFoodParnter = async (req, res) => {
     
    const {Name, Email, Password} = req.body;
 
-   const isAccountAlreadyExist = foodPartnerModel.findOne({Email});
+   const isAccountAlreadyExist = await foodPartnerModel.findOne({Email});
 
    if(isAccountAlreadyExist){
     res.status(400).json({message:" Account already exist"})
@@ -90,7 +90,7 @@ const registerFoodParnter = async (req, res) => {
    const foodPartner = await foodPartnerModel.create({
     Name,
     Email,
-    Password:hashPassword
+    Password:hashedPassword
    })
 
    const token = jwt.sign({
@@ -112,14 +112,15 @@ const registerFoodParnter = async (req, res) => {
 const loginFoodPartner = async (req, res) => {
 
     const {Email , Password } = req.body;
-    const foodPartner = foodPartnerModel.findOne({Email})
+    const foodPartner = await foodPartnerModel.findOne({Email})
 
     if(!foodPartner){
         return res.status(400).json({
             message:" Invalid user name or password"
         })
     }
-    const isPasswordValid = await bcrypt.compare(Password , foodPartner.Password);
+    const isPasswordValid = await bcrypt.compare(Password , foodPartner.Password); // comparing user enterd password in fronter to stored password in database
+    
 
     if(!isPasswordValid){
         return res.status(400).json({ message:" Invalid user name or Password"})
@@ -132,7 +133,7 @@ const loginFoodPartner = async (req, res) => {
     res.cookie("token", token);
 
     res.status(200).json({
-    message:" Food Partner register successfully",
+    message:" Food Partner login successfully",
     foodPartner:{
         _id :foodPartner._id,
         email: foodPartner.Email,
