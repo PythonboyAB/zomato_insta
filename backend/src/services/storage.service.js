@@ -17,4 +17,4 @@ async function uploadFile( file ,fileName){
     return result;
 }
 
-export default uploadFile;
+export {uploadFile};
