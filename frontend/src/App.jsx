@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import AppRoutes from "./src/AppRoutes.jsx"
+import React from 'react'
+import AppRoutes from "./routes/AppRoutes.jsx"
 import './App.css'
 
 function App() {
 
   return (
     <>
-    <h1>hello</h1>
+    <h1 className='p-10 text-8xl'>hello</h1>
     <AppRoutes/>
     </>
 
