@@ -5,19 +5,19 @@ import foodPartnerModel from "../models/foodPartner.model.js";
 
 async function registerUser (req, res) {
 
-    const {User , Email , Password} = req.body;
-    const isUserAlreadyExists = await userModel.findOne({Email})
+    const {fullName, email, password} = req.body;
+    const isUserAlreadyExists = await userModel.findOne({email})
 
     if(isUserAlreadyExists){
         return res.status(400).json({ message:" email id already exists"});
     }
 
-    const hashPassword = await bcrypt.hash(Password, 10);
+    const hashPassword = await bcrypt.hash(password, 10);
 
     const user = await userModel.create({
-        User,
-        Email,
-        Password:hashPassword 
+        fullName,
+        email,
+        password:hashPassword 
     })
 
     const token = jwt.sign({
