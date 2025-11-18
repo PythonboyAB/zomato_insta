@@ -1,10 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
 const UserRegister = () => {
-
+    const navigate =useNavigate();
+    
     const handleSubmit= async(e)=>{
       e.preventDefault();
       const firstName = e.target.firstName.value;
@@ -13,12 +16,16 @@ const UserRegister = () => {
       const email = e.target.email.value;
       const password = e.target.password.value; 
 
-      await axios.post("http://localhost:3000/api/auth/user/register",{
+     const response= await axios.post("http://localhost:3000/api/auth/user/register",{
         fullName:firstName + " " + lastName,
         email,
         password
+      },{
+        withCredentials:true
       })
 
+      console.log(response.data)
+      navigate("/user/register")
 
     }
 
@@ -37,13 +44,10 @@ const UserRegister = () => {
         {/* Switch links */}
         <p className="text-center text-sm text-gray-400 mt-2">
           Switch:{" "}
-          <span className="text-blue-400 hover:underline cursor-pointer">
-            User
-          </span>{" "}
-          ·{" "}
-          <span className="text-blue-400 hover:underline cursor-pointer">
-            Food partner
-          </span>
+          <Link to="/food-partner/register" className="text-blue-400 hover:underline cursor-pointer">Food Partner</Link>
+         
+          
+      
         </p>
 
         {/* Form */}
@@ -108,9 +112,7 @@ const UserRegister = () => {
         {/* Footer */}
         <p className="text-center text-gray-400 text-sm mt-4">
           Already have an account?{" "}
-          <span className="text-blue-400 hover:underline cursor-pointer">
-            Sign in
-          </span>
+          <Link to="/user/login" className="text-blue-400 hover:underline cursor-pointer">Sign in</Link>
         </p>
       </div>
     </div>

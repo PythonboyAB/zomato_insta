@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const FoodPartnerLogin = () => {
   return (
@@ -38,9 +39,9 @@ const FoodPartnerLogin = () => {
           {/* Footer */}
         <p className="text-center text-gray-400 text-sm mt-4">
           Already a partner?{" "}
-          <span className="text-blue-400 hover:underline cursor-pointer">
-            Sign in
-          </span>
+            <Link to='/food-partner/register' className="text-blue-400 hover:underline cursor-pointer" > Sign Up</Link>
+           
+         
         </p>
       </div>
     </div>
