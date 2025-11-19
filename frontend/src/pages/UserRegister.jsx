@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const UserRegister = () => {
     const navigate =useNavigate();
-    
+
     const handleSubmit= async(e)=>{
       e.preventDefault();
       const firstName = e.target.firstName.value;
@@ -25,7 +25,7 @@ const UserRegister = () => {
       })
 
       console.log(response.data)
-      navigate("/user/register")
+      navigate("/user/login")
 
     }
 
