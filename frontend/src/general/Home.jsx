@@ -11,6 +11,8 @@ export default function Home() {
       .then((res) => setVideos(res.data.foodItems || []))
       .catch(() => {});
   }, []);
+    console.log(videos);
+  
 
   const likeVideo = async (item) => {
     const res = await axios.post(
@@ -62,11 +64,13 @@ export default function Home() {
             className="relative h-[100dvh] w-full snap-start bg-black"
           >
             <video
-              src={item.videoUrl}
+              src={item.video}
               className="absolute inset-0 w-full h-full object-cover"
               autoPlay
               loop
               muted
+              playsInline
+              preload="metadata"
             />
 
             <div className="absolute inset-0 flex items-end">
