@@ -56,9 +56,9 @@ const Profile = () => {
       <hr className="my-4" />
       {/* body section shows food reels */}
       <div className="h-[75vh]  flex flex-wrap justify-between gap-y-6">
-        {video.map((item) => (
+        {video.map((item, index) => (
         //   <div className="border-2 border-slate-700 w-[48%] h-[45%]">
-            <video src={item.video} muted className=" h-[45%] w-[50%]"></video>
+            <video key={index} src={item.video} muted className=" h-[45%] w-[50%]"></video>
         //   </div>
         ))}
       </div>
