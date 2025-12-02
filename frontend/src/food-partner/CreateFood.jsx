@@ -87,7 +87,7 @@ import { useNavigate } from 'react-router-dom';
     console.log('Saving food:',response);
     alert('Food saved successfully!');
 
-    // navigate("/")
+    navigate("/")
   };
 
   return (
