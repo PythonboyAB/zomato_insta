@@ -1,17 +1,12 @@
-import React from 'react'
-import AppRoutes from "./routes/AppRoutes.jsx"
-import './App.css'
-import FoodPartnerRegister from './pages/FoodPartnerRegister.jsx'
+import { useState } from "react";
+import AppRoutes from "./Routes/AppRoutes";
 
 function App() {
-
   return (
-    <>
-    {/* <FoodPartnerRegister/> */}
-    <AppRoutes/>
-    </>
-
-  )
+    <div>
+      <AppRoutes />
+    </div>
+  );
 }
 
-export default App
+export default App;
