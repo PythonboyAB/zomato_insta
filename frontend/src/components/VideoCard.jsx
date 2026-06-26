@@ -9,9 +9,9 @@ function VideoCard({ item, foodPartner }) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          videoRef.current.play();
+          videoRef.current?.play();
         } else {
-          videoRef.current.pause();
+          videoRef.current?.pause();
         }
       },
       {
@@ -19,29 +19,32 @@ function VideoCard({ item, foodPartner }) {
       },
     );
 
-    observer.observe(videoRef.current);
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
 
     return () => observer.disconnect();
   }, []);
-  console.log(foodPartner);
+
   return (
-    <div className="h-screen snap-start w-full max-w-md mx-auto overflow-hidden relative">
+    <div className="relative h-screen snap-start">
       <video
         ref={videoRef}
-        className="w-full h-full object-cover block"
-        loop
-        muted
-        playsInline
         src={item.video}
+        className="w-full h-full object-cover"
+        muted
+        loop
+        playsInline
       />
 
-      <div className="absolute left-4 bottom-6 z-10">
+      <div className="absolute left-4 bottom-12">
         <h2 className="text-white mb-3">{item.description}</h2>
+
         <button
-          className="text-white text-xl tracking-wider bg-blue-800 rounded-lg px-3 py-2"
           onClick={() => navigate(`/profile/${foodPartner}`)}
+          className="bg-blue-700 text-white px-4 py-2 rounded-lg"
         >
-          visit Store{" "}
+          Visit Store
         </button>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const UploadIcon = () => (
   <svg
     className="w-8 h-8 text-slate-400 mb-2"
@@ -33,6 +34,8 @@ export default function CreateFood() {
   const [description, setDescription] = useState("");
   const fileInputRef = useRef(null);
 
+  const navigate = useNavigate();
+
   const handleFileChange = (e) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
@@ -59,13 +62,32 @@ export default function CreateFood() {
     setPreview(URL.createObjectURL(dropped));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!file || !name.trim()) {
       alert("Please upload a video and enter a name.");
       return;
     }
-    console.log({ file, name, description });
-    alert("Food saved!");
+
+    try {
+      const formData = new FormData();
+
+      formData.append("video", file);
+      formData.append("name", name);
+      formData.append("description", description);
+
+      const res = await axios.post(
+        "http://localhost:3000/api/food/",
+        formData,
+        {
+          withCredentials: true,
+        },
+      );
+
+      alert("Food saved!");
+      navigate("/");
+    } catch (error) {
+      console.log(error.response?.data || error);
+    }
   };
 
   const formatBytes = (bytes) => {

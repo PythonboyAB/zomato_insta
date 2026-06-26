@@ -23,8 +23,7 @@ const Profile = () => {
     }
     fetchData();
   }, [id]);
-  console.log(profile);
-  console.log(videos);
+
   return (
     <div className="w-screen min-h-screen bg-[#18243a] text-white">
       <div className="w-full max-w-md min-h-screen mx-auto md:bg-[#1c283a] p-3 ">
@@ -49,18 +48,14 @@ const Profile = () => {
           </div>
         </header>
         <hr className="my-7 text-gray-500" />
-        <section>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-black ">
+        <section className="flex justify-center">
+          <div className="grid grid-cols-2  md:grid-cols-3 gap-3 text-black ">
             {videos.map((item) => (
-              <div
+              <video
                 key={item._id}
-                className="w-40 h-45 md:w-30  shadow-2xs shadow-black"
-              >
-                <video
-                  src={item.video}
-                  className="object-fill w-full h-full rounded"
-                />
-              </div>
+                src={item.video}
+                className="object-fill w-40 h-45 md:w-30  shadow-2xs shadow-black rounded"
+              />
             ))}
           </div>
         </section>
