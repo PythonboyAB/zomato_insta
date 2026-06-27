@@ -21,6 +21,32 @@ const Home = () => {
 
     fetchData();
   }, []);
+  console.log(videos);
+
+  async function likeVideo(item) {
+    const response = await axios.post(
+      "http://localhost:3000/api/food/like",
+      { foodId: item._id },
+      { withCredentials: true },
+    );
+    console.log(response);
+
+    if (response.data.liked) {
+      console.log("video liked");
+      setVideos((prev) =>
+        prev.map((v) =>
+          v._id === item._id ? { ...v, likeCount: v.likeCount + 1 } : v,
+        ),
+      );
+    } else {
+      console.log("video unliked");
+      setVideos((prev) =>
+        prev.map((v) =>
+          v._id === item._id ? { ...v, likeCount: v.likeCount - 1 } : v,
+        ),
+      );
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#18243a] flex justify-center">
@@ -33,6 +59,7 @@ const Home = () => {
               key={item._id}
               item={item}
               foodPartner={item.foodPartner}
+              like={likeVideo}
             />
           ))}
         </section>

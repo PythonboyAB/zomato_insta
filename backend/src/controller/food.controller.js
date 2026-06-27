@@ -1,5 +1,5 @@
 import foodModel from "../models/food.model.js";
-import Like from "../models/likes.model.js";
+import likeModel from "../models/likes.model.js";
 import saveModel from "../models/save.model.js";
 import { uploadFile } from "../services/storage.service.js";
 import { v4 as uuid } from "uuid";
@@ -41,25 +41,34 @@ async function likeFood(req, res) {
   });
 
   if (isAlreadyLiked) {
-    await likedModel.deleteOne({
+    await likeModel.deleteOne({
       user: req.user._id,
       food: foodId,
     });
+    await foodModel.findByIdAndUpdate(
+      foodId,
+      {
+        $inc: { likeCount: -1 },
+      },
+      { new: true },
+    );
     return res.status(200).json({ message: "food unliked successfully" });
   }
-  await foodModel.findByIdAndUpdate(foodId, {
-    $inc: { likeCount: -1 },
-  });
 
   const like = await likeModel.create({
     user: user._id,
     food: foodId,
   });
-  await foodModel.findByIdAndUpdate(foodId, {
-    $inc: { likeCount: 1 },
-  });
+  const updated = await foodModel.findByIdAndUpdate(
+    foodId,
+    { $inc: { likeCount: 1 } },
+    { new: true },
+  );
 
-  res.status(201).json({ message: "food liked successfully", like });
+  res.json({
+    liked: true,
+    likeCount: updated.likeCount,
+  });
 }
 
 // Food reels save controllers
